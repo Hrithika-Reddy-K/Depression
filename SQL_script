@@ -1,0 +1,46 @@
+
+/* Creating a new table to use it as a working table and keeping the initial data imported from Excel as the 'Raw' table */
+/* Making the column headings short to do easy work */
+
+CREATE TABLE Work(
+Name TEXT,
+Designation TEXT,
+Gender TEXT,
+Age INTEGER,
+Mar_Stat TEXT,
+Ed_Level TEXT, 
+No_Child INTEGER,
+Smok_Stat TEXT,
+Phys_Level TEXT,
+Employ_Stat TEXT,
+Income REAL,
+Alcohol_Cons TEXT,
+Diet TEXT,
+Sleep TEXT,
+Hist_Ment_Ill TEXT,
+Hist_Subst TEXT,
+Family_Hist TEXT,
+Chronic_Cond TEXT)
+
+INSERT INTO Work(Name,Designation,Gender,Age,Mar_Stat,Ed_Level,No_Child,Smok_Stat,Phys_Level,Employ_Stat,Income,Alcohol_Cons,Diet,Sleep,Hist_Ment_Ill,Hist_Subst,Family_Hist,Chronic_Cond)
+SELECT  Name,Designation,Gender,Age,[Marital Status],[Education Level],[Number of Children],[Smoking Status],[Physical Activity Level],[Employment Status],Income,[Alcohol Consumption],[Dietary Habits],[Sleep Patterns],[History of Mental Illness],[History of Substance Abuse],[Family History of Depression],[Chronic Medical Conditions]
+FROM Raw 
+
+/* Rounding the Income value to set the income level of each individual */
+
+UPDATE Work
+SET Income = ROUND(Income,0)
+
+/* Adding income levels */
+
+ALTER TABLE Work
+ADD COLUMN Income_level TEXT
+
+UPDATE Work
+SET Income_level = CASE
+    WHEN Income <= 30000 THEN 'Lower'
+    WHEN Income >= 30001 AND Income <= 58020 THEN 'Lower Middle'
+    WHEN Income >= 58021 AND Income <= 94000 THEN 'Middle'
+    WHEN Income >= 94001 AND Income <= 153000 THEN 'Upper Middle'
+    WHEN Income >= 153000 THEN 'Upper'
+END
