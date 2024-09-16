@@ -18,3 +18,5 @@ Prioritizing mental health not only helps us navigate these challenges but also 
 - IDE: Visual Studio Code
 - Version Control: Git, GitHub
 
+## Steps Involved
+
